@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-qRFLMBrTM9HSpMScpl+CELsOSAWsQ2R1CmxaM9IsR8Q='; style-src 'sha256-uo/SUUa7eiKrzS5NiH1sjOQ+EPoS9Q4IAXw8vi1FS+0=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-J5IM5jO1SLb7H3OQrf4cke/eCTeOK6fPxyNvUuk9w2g='; style-src 'sha256-uo/SUUa7eiKrzS5NiH1sjOQ+EPoS9Q4IAXw8vi1FS+0=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -866,18 +866,16 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       h("div", null,
         h("div", { class: "eyebrow", text: rep === "Generali" ? "Tutti i reparti" : "Reparto" }),
         h("h1", { text: titolo }),
-        h("p", { class: "lead", text: sotto }),
-        h("div", { class: "numeri" },
-          h("span", null, h("b", { text: String(conta("pronto")) }), " pronti"),
-          h("span", null, h("b", { text: String(conta("bozza")) }), " da provare"),
-          h("span", null, h("b", { text: String(conta("collega")) }), " dei colleghi"))),
+        h("p", { class: "lead", text: sotto })),
       h("button", { class: "btn btn-p", type: "button", on: { click: function () { apriNuovo(rep); } } }, ico("plus"), "Nuovo prompt")));
 
     var selCat = h("select", { "aria-label": "Categoria", on: { change: function (e) { stato.filtro.cat = e.target.value; elenco(); } } },
       h("option", { value: "", text: "Tutte le categorie" }), cats.map(function (c) { return h("option", { value: c, text: c }); }));
     var chips = h("div", { class: "chips", role: "group", "aria-label": "Stato" });
+    // il numero di prompt sta dentro ogni filtro, al posto della riga di contatori sotto il titolo
     [["tutti", "Tutti"], ["pronto", "Pronti"], ["bozza", "Da provare"], ["collega", "Dei colleghi"]].forEach(function (c) {
-      chips.appendChild(h("button", { class: "chip", type: "button", "aria-pressed": String(stato.filtro.stato === c[0]), text: c[1], on: { click: function () {
+      var n = c[0] === "tutti" ? tutti.length : conta(c[0]);
+      chips.appendChild(h("button", { class: "chip", type: "button", "aria-pressed": String(stato.filtro.stato === c[0]), text: c[1] + " (" + n + ")", on: { click: function () {
         stato.filtro.stato = c[0]; Array.prototype.forEach.call(chips.children, function (b) { b.setAttribute("aria-pressed", String(b === this)); }, this); elenco();
       } } }));
     });
