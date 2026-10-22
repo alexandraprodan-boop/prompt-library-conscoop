@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-qRFLMBrTM9HSpMScpl+CELsOSAWsQ2R1CmxaM9IsR8Q='; style-src 'sha256-ijKaaE2ZPLLnTmhEOfvLIETynOBBD4pJ2IUHCpKpMHA=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-qRFLMBrTM9HSpMScpl+CELsOSAWsQ2R1CmxaM9IsR8Q='; style-src 'sha256-uo/SUUa7eiKrzS5NiH1sjOQ+EPoS9Q4IAXw8vi1FS+0=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -181,10 +181,11 @@ main{max-width:1280px;margin:0 auto;padding:28px 20px 80px}
 .numeri{display:flex;gap:18px;margin-top:10px;font-size:var(--fs-sm);color:var(--grigio);flex-wrap:wrap}
 .numeri b{color:var(--blu-notte);font-family:var(--title);font-size:var(--fs-base)}
 .filtri{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 6px}
-.cerca{flex:1;min-width:220px;position:relative}
+.cerca{flex:1 1 360px;min-width:280px;position:relative}
 .cerca input{width:100%;border:1px solid var(--linea);border-radius:8px;padding:9px 12px 9px 36px;background:var(--carta)}
 .cerca .ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--grigio)}
-.filtri select{border:1px solid var(--linea);border-radius:8px;padding:9px 10px;background:var(--carta);max-width:100%}
+/* larghezza fissa: un nome di categoria lungo non deve rubare spazio alla ricerca (nel menu aperto i nomi si leggono interi) */
+.filtri select{border:1px solid var(--linea);border-radius:8px;padding:9px 10px;background:var(--carta);width:240px;max-width:100%;text-overflow:ellipsis}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border:1px solid var(--linea);background:var(--carta);border-radius:20px;padding:6px 12px;font-size:var(--fs-sm);cursor:pointer;color:var(--grigio)}
 .chip[aria-pressed="true"]{background:var(--blu-notte);color:var(--carta);border-color:var(--blu-notte)}
