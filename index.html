@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rO4XZ5VVw0oO+dfrc12flkDuZMIeY+9h/Z+qPXFHEr8='; style-src 'sha256-5RtYS2S8C8F5g+aTXWNuTTpT2AmituoXFLNeMCBvHDA=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-J5IM5jO1SLb7H3OQrf4cke/eCTeOK6fPxyNvUuk9w2g='; style-src 'sha256-uo/SUUa7eiKrzS5NiH1sjOQ+EPoS9Q4IAXw8vi1FS+0=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -23,6 +23,13 @@
   --body:'Inter',-apple-system,'Segoe UI',Arial,sans-serif;
   --mono:Consolas,'SF Mono',Menlo,monospace;
   --ombra:0 1px 2px rgba(2,47,71,.06),0 4px 14px rgba(2,47,71,.06);
+  /* sei grandezze di testo, sempre le stesse in tutto il sito */
+  --fs-xs:12px;    /* etichette in maiuscolo, bollini, note piccole */
+  --fs-sm:13.5px;  /* testi secondari, avvisi, campi del modulo */
+  --fs-base:15px;  /* testo normale */
+  --fs-md:17px;    /* sottotitoli, titoli delle schede */
+  --fs-lg:22px;    /* titoli di sezione */
+  --fs-xl:32px;    /* titolo della pagina */
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -41,187 +48,225 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--fondo);color:var(--testo);font:15px/1.6 var(--body)}
+body{margin:0;background:var(--fondo);color:var(--testo);font:var(--fs-base)/1.6 var(--body)}
 a{color:var(--blu-medio)}
 button,input,select,textarea{font:inherit;color:inherit}
 h1,h2,h3,h4{font-family:var(--title);color:var(--blu-notte);letter-spacing:-.01em;line-height:1.2;margin:0}
 .ico{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .hidden{display:none !important}
-kbd{display:inline-block;font:600 12px/1 var(--mono);padding:4px 7px;border:1px solid var(--linea);border-bottom-width:2px;border-radius:6px;background:var(--carta);color:var(--blu-notte);white-space:nowrap}
+kbd{display:inline-block;font:600 var(--fs-xs)/1 var(--mono);padding:4px 7px;border:1px solid var(--linea);border-bottom-width:2px;border-radius:6px;background:var(--carta);color:var(--blu-notte);white-space:nowrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* ===== barra in alto ===== */
 .top{position:sticky;top:0;z-index:20;background:var(--carta);border-bottom:1px solid var(--linea)}
-.top-in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px}
+.top-in{max-width:1280px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;flex:none}
 .brand img{height:30px;background:#fff;border-radius:6px;padding:3px 6px}
-.brand b{font-family:var(--title);font-size:17px;color:var(--blu-notte);font-weight:600}
+.brand b{font-family:var(--title);font-size:var(--fs-md);color:var(--blu-notte);font-weight:600}
 .nav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
-.nav a{padding:7px 12px;border-radius:8px;text-decoration:none;color:var(--grigio);font-weight:500;font-size:14px;white-space:nowrap}
-.nav a:hover{background:var(--fondo);color:var(--blu-notte)}
-.nav a[aria-current="page"]{background:var(--blu-1);color:var(--blu-notte);font-weight:600}
-.utente{display:flex;align-items:center;gap:8px;flex:none;font-size:13px;color:var(--grigio)}
+.nav a,.guida{padding:7px 12px;border-radius:8px;text-decoration:none;color:var(--grigio);font-weight:500;font-size:var(--fs-sm);white-space:nowrap}
+.nav a:hover,.guida:hover{background:var(--fondo);color:var(--blu-notte)}
+.nav a[aria-current="page"],.guida[aria-current="page"]{background:var(--blu-1);color:var(--blu-notte);font-weight:600}
+.guida{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--linea)}
+.guida .ico{width:16px;height:16px}
+.utente{display:flex;align-items:center;gap:8px;flex:none;font-size:var(--fs-sm);color:var(--grigio)}
 .utente .chi{padding:4px 10px;border-radius:20px;background:var(--fondo);border:1px solid var(--linea);white-space:nowrap}
 .btn-ico{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid var(--linea);background:var(--carta);cursor:pointer;color:var(--blu-notte)}
 .btn-ico:hover{background:var(--fondo)}
 
 /* ===== bottoni ===== */
-.btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:9px 16px;font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:9px 16px;font-weight:600;font-size:var(--fs-sm);cursor:pointer;border:1px solid transparent;text-decoration:none}
 .btn-p{background:var(--blu-medio);color:#fff}
-:root[data-theme="dark"] .btn-p{color:#06202e}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-p{color:#06202e}}
-.btn-p:hover{filter:brightness(1.08)}
+:root[data-theme="dark"] .btn-p,:root[data-theme="dark"] .btn-rosso{color:#06202e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-p,:root:not([data-theme="light"]) .btn-rosso{color:#06202e}}
+.btn-p:hover,.btn-rosso:hover{filter:brightness(1.08)}
 .btn-s{background:var(--carta);color:var(--blu-notte);border-color:var(--linea)}
 .btn-s:hover{background:var(--fondo)}
 .btn-d{background:var(--carta);color:var(--rosso);border-color:var(--linea)}
 .btn-d:hover{background:var(--rosso-tint)}
+.btn-rosso{background:var(--rosso);color:#fff}
 .btn:disabled{opacity:.55;cursor:default}
-.btn-sm{padding:6px 11px;font-size:13px}
+.btn-sm{padding:6px 11px;font-size:var(--fs-sm)}
 
 /* ===== pagina ===== */
-main{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--rosso)}
-.lead{font-size:17px;color:var(--grigio);max-width:760px;margin:10px 0 0}
+main{max-width:1280px;margin:0 auto;padding:28px 20px 80px}
+.eyebrow{font-size:var(--fs-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blu-medio)}
+.lead{font-size:var(--fs-md);color:var(--grigio);max-width:880px;margin:10px 0 0}
 .hero{padding:10px 0 26px;border-bottom:1px solid var(--linea);margin-bottom:28px}
-.hero h1{font-size:34px;margin-top:6px}
+.hero h1{font-size:var(--fs-xl);margin-top:6px}
 
 /* ===== accesso ===== */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .login-card{width:100%;max-width:400px;background:var(--carta);border:1px solid var(--linea);border-radius:14px;padding:30px 28px;box-shadow:var(--ombra)}
-.login-card img{height:44px;background:#fff;border-radius:8px;padding:4px 8px}
-.login-card h1{font-size:24px;margin:18px 0 4px}
-.login-card p{color:var(--grigio);font-size:14px;margin:0 0 20px}
+.login-card img{height:56px;background:#fff;border-radius:8px;padding:4px 8px}
+.login-card h1{font-size:var(--fs-lg);margin:18px 0 4px}
+.login-card p{color:var(--grigio);font-size:var(--fs-sm);margin:0 0 20px}
+.login-card .btn{width:100%;justify-content:center;padding:11px 16px;font-size:var(--fs-base)}
 .campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.campo label{font-size:13px;font-weight:600;color:var(--blu-notte)}
-.campo small{color:var(--grigio);font-size:12.5px}
+.campo label{font-size:var(--fs-sm);font-weight:600;color:var(--blu-notte)}
+.campo small{color:var(--grigio);font-size:var(--fs-xs)}
 .campo input,.campo select,.campo textarea{width:100%;border:1px solid var(--linea);border-radius:8px;padding:9px 11px;background:var(--carta)}
-.campo textarea{min-height:90px;resize:vertical;font:13px/1.5 var(--mono)}
+.campo textarea{min-height:90px;resize:vertical;font:var(--fs-sm)/1.5 var(--mono)}
 .campo input:focus,.campo select:focus,.campo textarea:focus{outline:2px solid var(--blu-medio);outline-offset:0;border-color:transparent}
-.errore{color:var(--rosso);background:var(--rosso-tint);border-radius:8px;padding:9px 12px;font-size:13.5px;margin-bottom:14px}
-.login .nota{font-size:12.5px;color:var(--grigio);margin-top:16px;line-height:1.5}
+.campo.err input,.campo.err select,.campo.err textarea{border-color:var(--rosso);background:var(--rosso-tint)}
+.campo.err label{color:var(--rosso)}
+.campo .msg-err{display:flex;gap:6px;align-items:flex-start;color:var(--rosso);font-size:var(--fs-sm);font-weight:500}
+.campo .msg-err .ico{width:16px;height:16px;margin-top:2px}
+.errore{color:var(--rosso);background:var(--rosso-tint);border-radius:8px;padding:9px 12px;font-size:var(--fs-sm);margin-bottom:14px}
+.login .nota{font-size:var(--fs-xs);color:var(--grigio);margin-top:16px;line-height:1.5}
 
-/* ===== home: passi ===== */
-.passi{display:flex;flex-direction:column;gap:0;counter-reset:passo}
-.passo{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;padding:26px 0;border-bottom:1px solid var(--linea)}
+/* ===== guida: passi ===== */
+.passi{display:flex;flex-direction:column;gap:0}
+.passo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;padding:26px 0;border-bottom:1px solid var(--linea)}
 .passo:first-child{padding-top:4px}
 .passo-tx{display:grid;grid-template-columns:44px 1fr;gap:14px}
-.passo-n{width:40px;height:40px;border-radius:10px;background:var(--blu-notte);color:var(--carta);font:700 18px/40px var(--title);text-align:center}
-.passo h3{font-size:19px;margin:6px 0 8px}
+.passo-n{width:40px;height:40px;border-radius:10px;background:var(--blu-notte);color:var(--carta);font:700 var(--fs-md)/40px var(--title);text-align:center}
+.passo h3{font-size:var(--fs-md);margin:8px 0 8px}
 .passo p{margin:0 0 10px}
-.passo .es{border-left:3px solid var(--blu-medio);background:var(--blu-1);padding:10px 14px;border-radius:0 8px 8px 0;font-size:14px;color:var(--blu-notte);margin:10px 0}
-.tasti{background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:16px 18px;align-self:start}
-.tasti h4{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);font-family:var(--body);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.tasti ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.tasti li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:13.5px;line-height:1.5}
-.tasti li .k{display:flex;gap:4px;flex-wrap:wrap;align-items:center;min-width:28px}
+.passo .es{border-left:3px solid var(--blu-medio);background:var(--blu-1);padding:10px 14px;border-radius:0 8px 8px 0;font-size:var(--fs-sm);color:var(--blu-notte);margin:10px 0}
+.tasti{background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:16px 18px 6px;align-self:center}
+.tasti h4{font-size:var(--fs-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);font-family:var(--body);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+/* una colonna per tasti e icone, uguale in tutti i riquadri (larga quanto «Maiusc Invio», il gruppo più lungo):
+   così i testi partono dalla stessa linea in ogni riquadro, e tasti e icone stanno al centro della colonna */
+.tasti{--col-tasti:7rem}
+.tasti ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:var(--col-tasti) 1fr;column-gap:12px}
+/* ogni voce separata da una linea sottile, come nella tabella dei tasti */
+.tasti li{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:center;font-size:var(--fs-sm);line-height:1.5;padding:12px 0}
+.tasti li+li{border-top:1px solid var(--linea)}
+.nobr{white-space:nowrap}
+.tasti li .k{display:flex;gap:4px;flex-wrap:nowrap;align-items:center;justify-content:center;justify-self:center;min-width:22px}
 .tasti li.ok .k,.tasti li.no .k,.tasti li.attenzione .k{width:22px;height:22px;border-radius:50%;justify-content:center;min-width:0}
 .tasti li.ok .k{background:var(--verde-tint);color:var(--verde)}
 .tasti li.no .k{background:var(--rosso-tint);color:var(--rosso)}
 .tasti li.attenzione .k{background:var(--ambra-tint);color:var(--ambra)}
 .tasti li .ico{width:14px;height:14px}
-.scudo{display:inline-flex;align-items:center;gap:6px;background:var(--verde-tint);color:var(--verde);border-radius:20px;padding:2px 10px 2px 7px;font-weight:600;font-size:12.5px}
+.scudo{display:inline-flex;align-items:center;gap:6px;background:var(--verde-tint);color:var(--verde);border-radius:20px;padding:2px 10px 2px 7px;font-weight:600;font-size:var(--fs-xs)}
 .scudo .ico{width:15px;height:15px}
 
-.sezione{margin-top:46px}
-.sezione>h2{font-size:24px;margin-bottom:6px}
-.sezione>.lead{margin-bottom:20px}
+/* ===== guida: approfondimenti a fisarmonica ===== */
+.approfondimenti{margin-top:46px}
+.approfondimenti>h2{font-size:var(--fs-lg);margin-bottom:6px}
+.approfondimenti>.lead{margin:0 0 16px}
+.fisa{background:var(--carta);border:1px solid var(--linea);border-radius:12px;margin-bottom:10px}
+.fisa>summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.fisa>summary::-webkit-details-marker{display:none}
+.fisa>summary:hover{background:var(--fondo);border-radius:12px}
+.fisa>summary h3{font-size:var(--fs-md)}
+.fisa>summary .ico{color:var(--blu-medio);transition:transform .15s}
+.fisa[open]>summary .ico{transform:rotate(90deg)}
+.fisa-b{padding:0 20px 20px}
+.fisa-b>.lead{font-size:var(--fs-base);margin:0 0 16px}
 .griglia{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .box{background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:16px 18px}
-.box h3{font-size:16px;margin-bottom:6px}
-.box p{margin:0;font-size:14px;color:var(--grigio)}
-.box .tag{font:600 11px/1 var(--mono);letter-spacing:.06em;color:var(--blu-medio);text-transform:uppercase;display:block;margin-bottom:8px}
-.regole{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;counter-reset:r}
-.regola{background:var(--carta);border:1px solid var(--linea);border-top:3px solid var(--rosso);border-radius:0 0 12px 12px;padding:14px 16px}
-.regola b{display:block;font-family:var(--title);color:var(--blu-notte);font-size:15px;margin-bottom:6px;line-height:1.3}
-.regola span{font-size:13px;color:var(--grigio);line-height:1.5;display:block}
+.box h3{font-size:var(--fs-md);margin-bottom:6px}
+.box p{margin:0;font-size:var(--fs-sm);color:var(--grigio)}
+.box .tag{font:600 var(--fs-xs)/1 var(--mono);letter-spacing:.06em;color:var(--blu-medio);text-transform:uppercase;display:block;margin-bottom:8px}
+.regole{list-style:none;margin:0;padding:0;counter-reset:r;display:flex;flex-direction:column;gap:10px;max-width:820px}
+.regola{counter-increment:r;display:grid;grid-template-columns:36px 1fr;gap:4px 14px;background:var(--fondo);border:1px solid var(--linea);border-left:3px solid var(--blu-medio);border-radius:0 10px 10px 0;padding:14px 16px}
+.regola::before{content:counter(r);grid-row:1/3;width:32px;height:32px;border-radius:50%;background:var(--blu-medio);color:var(--carta);font:700 var(--fs-base)/32px var(--title);text-align:center}
+.regola b{font-family:var(--title);color:var(--blu-notte);font-size:var(--fs-md);line-height:1.3}
+.regola span{font-size:var(--fs-base);color:var(--grigio);line-height:1.5}
 .due{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .box.chiaro{background:var(--blu-1);border-color:var(--blu-2)}
-.box ul{margin:8px 0 0;padding-left:18px;font-size:14px}
+.box ul{margin:8px 0 0;padding-left:18px;font-size:var(--fs-sm)}
 .box li{margin-bottom:4px}
-.tabella-tasti{width:100%;border-collapse:collapse;background:var(--carta);border:1px solid var(--linea);border-radius:12px;overflow:hidden;font-size:14px}
+.tabella-tasti{width:100%;border-collapse:collapse;background:var(--carta);border:1px solid var(--linea);border-radius:12px;overflow:hidden;font-size:var(--fs-sm)}
 .tabella-tasti td{padding:10px 14px;border-bottom:1px solid var(--linea);vertical-align:top}
 .tabella-tasti tr:last-child td{border-bottom:none}
 .tabella-tasti td:first-child{white-space:nowrap;width:1%}
 
 /* ===== pagine di reparto ===== */
 .rep-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--linea)}
-.rep-head h1{font-size:32px;margin-top:6px}
-.numeri{display:flex;gap:18px;margin-top:10px;font-size:13.5px;color:var(--grigio);flex-wrap:wrap}
-.numeri b{color:var(--blu-notte);font-family:var(--title);font-size:16px}
+.rep-head h1{font-size:var(--fs-xl);margin-top:6px}
+.numeri{display:flex;gap:18px;margin-top:10px;font-size:var(--fs-sm);color:var(--grigio);flex-wrap:wrap}
+.numeri b{color:var(--blu-notte);font-family:var(--title);font-size:var(--fs-base)}
 .filtri{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 6px}
-.cerca{flex:1;min-width:220px;position:relative}
+.cerca{flex:1 1 360px;min-width:280px;position:relative}
 .cerca input{width:100%;border:1px solid var(--linea);border-radius:8px;padding:9px 12px 9px 36px;background:var(--carta)}
 .cerca .ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--grigio)}
-.filtri select{border:1px solid var(--linea);border-radius:8px;padding:9px 10px;background:var(--carta);max-width:100%}
+/* larghezza fissa: un nome di categoria lungo non deve rubare spazio alla ricerca (nel menu aperto i nomi si leggono interi) */
+.filtri select{border:1px solid var(--linea);border-radius:8px;padding:9px 10px;background:var(--carta);width:240px;max-width:100%;text-overflow:ellipsis}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{border:1px solid var(--linea);background:var(--carta);border-radius:20px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--grigio)}
+.chip{border:1px solid var(--linea);background:var(--carta);border-radius:20px;padding:6px 12px;font-size:var(--fs-sm);cursor:pointer;color:var(--grigio)}
 .chip[aria-pressed="true"]{background:var(--blu-notte);color:var(--carta);border-color:var(--blu-notte)}
 .vuoto{padding:40px 20px;text-align:center;color:var(--grigio);background:var(--carta);border:1px dashed var(--linea);border-radius:12px;margin-top:20px}
 
 .cat{margin-top:30px}
 .cat-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
-.cat-h h2{font-size:20px}
-.cat-h .n{font-size:13px;color:var(--grigio)}
-.cat>p{margin:0 0 12px;color:var(--grigio);font-size:14px;max-width:820px}
+.cat-h h2{font-size:var(--fs-lg)}
+.cat-h .n{font-size:var(--fs-sm);color:var(--grigio)}
+.cat>p{margin:0 0 12px;color:var(--grigio);font-size:var(--fs-sm);max-width:820px}
 .cards{display:flex;flex-direction:column;gap:10px}
 .card{background:var(--carta);border:1px solid var(--linea);border-radius:12px;box-shadow:var(--ombra)}
 .card>summary{list-style:none;cursor:pointer;padding:14px 18px;display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:start}
 .card>summary::-webkit-details-marker{display:none}
-.card .t{font-family:var(--title);font-weight:600;font-size:16px;color:var(--blu-notte);line-height:1.3;display:flex;gap:10px;align-items:flex-start}
+.card .t{font-family:var(--title);font-weight:600;font-size:var(--fs-md);color:var(--blu-notte);line-height:1.3;display:flex;gap:10px;align-items:flex-start}
 .card .t .ico{margin-top:2px;color:var(--grigio);transition:transform .15s}
 .card[open] .t .ico{transform:rotate(90deg)}
-.card .meta{grid-column:1/2;display:flex;gap:6px 14px;flex-wrap:wrap;font-size:13px;color:var(--grigio);padding-left:28px}
+.card .meta{grid-column:1/2;display:flex;gap:6px 14px;flex-wrap:wrap;font-size:var(--fs-sm);color:var(--grigio);padding-left:28px}
 .card .meta span{display:inline-flex;gap:6px;align-items:center}
 .card .meta .ico{width:14px;height:14px}
-.card .azioni{grid-row:1/3;grid-column:2;display:flex;gap:8px;align-items:center;align-self:center}
-.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:20px;padding:3px 10px;white-space:nowrap}
+.card .azioni{grid-row:1/3;grid-column:2;display:flex;gap:10px;align-items:center;align-self:center}
+.card .azioni .btn{padding:9px 16px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:20px;padding:3px 10px;white-space:nowrap}
 .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
 .badge.pronto{color:var(--verde);background:var(--verde-tint)}
 .badge.bozza{color:var(--ambra);background:var(--ambra-tint)}
 .badge.collega{color:var(--blu-medio);background:var(--blu-1)}
 .card-b{padding:0 18px 18px 46px;display:flex;flex-direction:column;gap:16px}
-.card-b h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--grigio);font-family:var(--body);font-weight:600;margin-bottom:6px}
-.card-b ol,.card-b ul{margin:0;padding-left:20px;font-size:14px}
+.card-b h4{font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--grigio);font-family:var(--body);font-weight:600;margin-bottom:6px}
+.card-b ol,.card-b ul{margin:0;padding-left:20px;font-size:var(--fs-base)}
 .card-b li{margin-bottom:3px}
-.card-b p{margin:0;font-size:14px}
-.dati{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:14px}
+.card-b p{margin:0;font-size:var(--fs-base)}
+.dati{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:var(--fs-sm)}
 .dati dt{color:var(--grigio)}
 .dati dd{margin:0}
 .blocco{border:1px solid var(--linea);border-radius:10px;overflow:hidden}
 .blocco-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px 8px 14px;background:var(--fondo);border-bottom:1px solid var(--linea)}
-.blocco-h b{font-size:13px;color:var(--blu-notte)}
-.blocco pre{margin:0;padding:14px;background:var(--codice);font:12.5px/1.6 var(--mono);white-space:pre-wrap;word-break:break-word;max-height:420px;overflow:auto}
-.avviso{font-size:13.5px;border-radius:8px;padding:10px 14px;background:var(--ambra-tint);color:var(--testo);border-left:3px solid var(--ambra)}
+.blocco-h b{font-size:var(--fs-sm);color:var(--blu-notte)}
+.blocco pre{margin:0;padding:14px;background:var(--codice);font:var(--fs-sm)/1.6 var(--mono);white-space:pre-wrap;word-break:break-word;max-height:420px;overflow:auto}
+.avviso{font-size:var(--fs-sm);border-radius:8px;padding:10px 14px;background:var(--ambra-tint);color:var(--testo);border-left:3px solid var(--ambra)}
 .avviso.blu{background:var(--blu-1);border-left-color:var(--blu-medio)}
-.piede-card{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--grigio);border-top:1px solid var(--linea);padding-top:12px}
+.dlg-b>.avviso{margin-bottom:16px}
+.piede-card{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--grigio);border-top:1px solid var(--linea);padding-top:12px}
 
-/* ===== finestra nuovo prompt ===== */
+/* ===== finestre (nuovo prompt, conferma) ===== */
 dialog{border:none;border-radius:14px;padding:0;width:min(720px,calc(100vw - 32px));max-height:calc(100vh - 40px);background:var(--carta);color:var(--testo);box-shadow:0 20px 60px rgba(0,0,0,.25)}
 dialog::backdrop{background:rgba(2,20,30,.5)}
 .dlg-h{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--linea);position:sticky;top:0;background:var(--carta);z-index:1}
-.dlg-h h2{font-size:20px}
+.dlg-h h2{font-size:var(--fs-lg)}
 .dlg-b{padding:18px 22px}
 .dlg-f{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid var(--linea);position:sticky;bottom:0;background:var(--carta)}
 .riga2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.altri{border:1px solid var(--linea);border-radius:10px;margin-top:4px}
+.altri>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:8px;font-size:var(--fs-sm);font-weight:600;color:var(--blu-medio)}
+.altri>summary::-webkit-details-marker{display:none}
+.altri>summary .ico{width:16px;height:16px;transition:transform .15s}
+.altri[open]>summary .ico{transform:rotate(90deg)}
+.altri-b{padding:4px 14px 2px}
+dialog.piccola{width:min(440px,calc(100vw - 32px))}
+dialog.piccola .dlg-h{border-bottom:none;padding-bottom:4px}
+dialog.piccola .dlg-b{padding-top:8px}
+dialog.piccola .dlg-b p{margin:0;color:var(--grigio)}
+dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
 
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--blu-notte);color:var(--carta);padding:10px 18px;border-radius:10px;font-size:14px;font-weight:500;transition:.2s;pointer-events:none;z-index:50;display:flex;gap:8px;align-items:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--blu-notte);color:var(--carta);padding:10px 18px;border-radius:10px;font-size:var(--fs-sm);font-weight:500;transition:.2s;pointer-events:none;z-index:50;display:flex;gap:8px;align-items:center}
 .toast.vis{opacity:1;transform:translateX(-50%) translateY(0)}
-.piede{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-size:12.5px;color:var(--grigio)}
+.piede{max-width:1280px;margin:0 auto;padding:0 20px 40px;font-size:var(--fs-xs);color:var(--grigio)}
 
 /* ===== telefono ===== */
 @media (max-width:960px){
   .passo{grid-template-columns:1fr;gap:14px}
-  .regole{grid-template-columns:repeat(2,1fr)}
   .griglia{grid-template-columns:1fr 1fr}
 }
 @media (max-width:700px){
+  :root{--fs-xl:26px;--fs-lg:20px}
   main{padding:20px 16px 60px}
   .top-in{flex-wrap:wrap;padding:10px 16px;gap:10px}
   .nav{order:3;flex-basis:100%}
   .utente{margin-left:auto}
   .utente .chi{display:none}
-  .hero h1,.rep-head h1{font-size:26px}
-  .griglia,.due,.regole,.riga2{grid-template-columns:1fr}
+  .griglia,.due,.riga2{grid-template-columns:1fr}
   .passo-tx{grid-template-columns:1fr;gap:8px}
   .card>summary{grid-template-columns:1fr}
   .card .azioni{grid-row:auto;grid-column:1;padding-left:28px}
@@ -229,8 +274,15 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
   .dati{grid-template-columns:1fr}
   .dati dt{font-weight:600;margin-top:4px}
   .tabella-tasti td:first-child{white-space:normal}
+  .fisa>summary{padding:14px 16px}
+  .fisa-b{padding:0 16px 16px}
 }
-.campo textarea.testo{font:14px/1.5 var(--body);min-height:70px}
+.campo textarea.testo{font:var(--fs-base)/1.5 var(--body);min-height:70px}
+
+/* ===== testi di lettura giustificati: le parole non si spezzano mai e l'ultima riga non resta con una parola sola
+   (text-wrap:pretty). Restano allineati a sinistra titoli, pulsanti, etichette e il testo dei prompt, che va incollato così com'è ===== */
+.lead,.passo p,.passo .es,.tasti li>span:last-child,.box p,.box li,.regola span,.tabella-tasti td+td,
+.cat>p,.card-b p,.card-b li,.avviso,.login-card p,.login .nota{text-align:justify;-webkit-hyphens:manual;hyphens:manual;text-wrap:pretty}
 </style>
 </head>
 <body>
@@ -251,6 +303,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4M10 16l-4-4 4-4M6 12h10"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2V5z"/><path d="M4 19a2 2 0 012-2h13M9 7h6"/></symbol>
 </svg>
 
 <!-- Accesso -->
@@ -266,7 +319,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       <div class="campo hidden" id="c-demo"><label for="l-demo">Anteprima locale: entra come</label><select id="l-demo"></select><small>Il sito non è ancora collegato a Supabase: i prompt arrivano da un file locale e le modifiche non si salvano.</small></div>
       <button class="btn btn-p" type="submit" id="b-login">Entra</button>
     </form>
-    <p class="nota">Gli account li crea il gruppo di progetto: non ci si può iscrivere. Se hai perso la password, chiedila al referente del tuo reparto.</p>
+    <p class="nota"><em>Gli account li crea il gruppo di progetto: non ci si può iscrivere. Se hai perso la password, chiedila al referente del tuo reparto.</em></p>
   </div>
 </div>
 
@@ -274,9 +327,10 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
 <div id="v-app" class="hidden">
   <header class="top">
     <div class="top-in">
-      <a class="brand" href="#home"><img src="data:image/png;base64,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" alt="CONSCOOP"><b>Prompt Library</b></a>
+      <a class="brand" href="#" id="b-brand"><img src="data:image/png;base64,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" alt="CONSCOOP"><b>Prompt Library</b></a>
       <nav class="nav" id="nav" aria-label="Pagine"></nav>
       <div class="utente">
+        <a class="guida" id="b-guida" href="#home" title="Come si costruisce un prompt in Copilot"><svg class="ico"><use href="#i-book"/></svg>Guida</a>
         <span class="chi" id="chi"></span>
         <button class="btn-ico" id="b-tema" type="button" title="Tema chiaro o scuro" aria-label="Tema chiaro o scuro"><svg class="ico"><use href="#i-moon"/></svg></button>
         <button class="btn-ico" id="b-esci" type="button" title="Esci" aria-label="Esci"><svg class="ico"><use href="#i-out"/></svg></button>
@@ -287,7 +341,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
     <div id="p-home"><section class="hero">
   <div class="eyebrow">Guida pratica · Microsoft 365 Copilot</div>
   <h1>Come si costruisce un prompt in Copilot</h1>
-  <p class="lead">Il metodo della formazione del 17 settembre, passo per passo. Non serve scrivere il prompt da soli: si allega il documento, si spiega cosa serve, ci si fa fare le domande e Copilot scrive il prompt. Poi lo si usa in una chat nuova e si controlla il risultato. A destra di ogni passo trovi i tasti e le cose da verificare.</p>
+  <p class="lead">Il metodo della formazione del 17 settembre, passo per passo. Non serve scrivere il prompt da soli: allega il documento, spiega cosa ti serve, fatti fare le domande e Copilot scrive il prompt da usare in una chat nuova. A destra di ogni passo trovi i tasti e le cose da controllare.</p>
 </section>
 
 <div class="passi">
@@ -305,7 +359,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
     <aside class="tasti">
       <h4><svg class="ico"><use href="#i-check"/></svg>Da controllare</h4>
       <ul>
-        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>In alto, accanto a «Nuova chat», c'è lo <span class="scudo"><svg class="ico"><use href="#i-shield"/></svg>scudo verde</span>. Passandoci sopra con il mouse compare la scritta sulla protezione dei dati aziendali (<i>Enterprise data protection</i>).</span></li>
+        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>In alto, accanto a <span class="nobr">«Nuova chat»</span>, c'è lo <span class="scudo"><svg class="ico"><use href="#i-shield"/></svg>scudo verde</span>. Passandoci sopra con il mouse compare la scritta sulla protezione dei dati aziendali (<i>Enterprise data protection</i>).</span></li>
         <li class="no"><span class="k"><svg class="ico"><use href="#i-x"/></svg></span><span>Se lo scudo verde non c'è, stai usando la versione personale: esci e rientra con l'account CONSCOOP. <b>Senza scudo, niente documenti di lavoro.</b></span></li>
         <li class="attenzione"><span class="k"><svg class="ico"><use href="#i-alert"/></svg></span><span>Il nome e la posizione dei menu possono cambiare un po' con gli aggiornamenti di Copilot.</span></li>
       </ul>
@@ -317,7 +371,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       <div class="passo-n">2</div>
       <div>
         <h3>Allega il documento su cui lavorare</h3>
-        <p>Clicca sulla <b>graffetta</b> o sul <b>«+»</b> nella casella di testo e scegli il file dal computer, da OneDrive o da SharePoint. Puoi anche trascinarlo nella chat.</p>
+        <p>Clicca sulla <b>graffetta</b> o sul <b><span class="nobr">«+»</span></b> nella casella di testo e scegli il file dal computer, da OneDrive o da SharePoint. Puoi anche trascinarlo nella chat.</p>
         <p>Un solo compito per chat, con i documenti che servono a quel compito.</p>
       </div>
     </div>
@@ -327,7 +381,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
         <li><span class="k"><kbd>/</kbd></span><span>Scrivi <b>/</b> nella casella e poi il nome del file: Copilot ti propone i file di OneDrive e SharePoint da richiamare.</span></li>
         <li class="attenzione"><span class="k"><svg class="ico"><use href="#i-alert"/></svg></span><span>Un file firmato digitalmente <b>.p7m</b> Copilot non lo legge: estrai prima il PDF.</span></li>
         <li class="attenzione"><span class="k"><svg class="ico"><use href="#i-alert"/></svg></span><span>PDF scansionato (un'immagine, senza testo)? Aprilo prima in Word, oppure fai una cattura della pagina con <kbd>Win</kbd> <kbd>Maiusc</kbd> <kbd>S</kbd> e incollala.</span></li>
-        <li><span class="k"><kbd>Ctrl</kbd> <kbd>T</kbd></span><span>In Excel Copilot lavora solo sulle tabelle: seleziona i dati e premi <b>Ctrl+T</b> («Formatta come tabella»).</span></li>
+        <li><span class="k"><kbd>Ctrl</kbd> <kbd>T</kbd></span><span>In Excel Copilot lavora solo sulle tabelle: seleziona i dati e premi <b>Ctrl+T</b> (<span class="nobr">«Formatta come tabella»</span>).</span></li>
         <li class="attenzione"><span class="k"><svg class="ico"><use href="#i-alert"/></svg></span><span>In Business Central non c'è Copilot: esporta in Excel e allega il file.</span></li>
       </ul>
     </aside>
@@ -340,7 +394,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
         <h3>Spiega cosa ti serve e fatti fare le domande</h3>
         <p>Scrivi in due o tre righe cosa devi fare con il documento e a cosa ti servirà il risultato. Poi chiedi a Copilot di <b>farti le domande prima di scrivere</b>: le domande fanno emergere i casi particolari a cui non avresti pensato.</p>
         <div class="es">«Devo estrarre da questo applicativo i dati per inserirli nel gestionale. Prima di scrivere il prompt, fammi le domande che ti servono per capire come voglio la checklist.»</div>
-        <p>Il prompt pronto per questo passo è nella pagina <a href="#generali">Prompt generali</a>: «Costruiscimi il prompt».</p>
+        <p>Il prompt pronto per questo passo è nella pagina <a href="#generali">Prompt generali</a>: <span class="nobr">«Costruiscimi il prompt»</span>.</p>
       </div>
     </div>
     <aside class="tasti">
@@ -366,11 +420,11 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
     <aside class="tasti">
       <h4><svg class="ico"><use href="#i-check"/></svg>Il prompt deve contenere</h4>
       <ul>
-        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Il ruolo («Sei l'assistente dell'ufficio…») e il contesto CONSCOOP in una riga.</span></li>
+        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Il ruolo (<span class="nobr">«Sei l'assistente dell'ufficio…»</span>) e il contesto CONSCOOP in una riga.</span></li>
         <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Il compito, detto in modo preciso.</span></li>
-        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Le <b>REGOLE FERREE</b>: copiare i valori esatti, «— NON NEL DOCUMENTO» se un dato manca, pagina o articolo per ogni dato, non inventare.</span></li>
+        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Le <b>REGOLE FERREE</b>: copiare i valori esatti, <span class="nobr">«— NON NEL DOCUMENTO»</span> se un dato manca, pagina o articolo per ogni dato, non inventare.</span></li>
         <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Il formato di uscita: sezioni e tabelle con le colonne.</span></li>
-        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>In chiusura la sezione «DA COMPLETARE A MANO».</span></li>
+        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>In chiusura la sezione <span class="nobr">«DA COMPLETARE A MANO»</span>.</span></li>
       </ul>
     </aside>
   </div>
@@ -381,7 +435,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       <div>
         <h3>Copia il prompt</h3>
         <p>Usa il tasto <b>Copia</b> che compare sotto la risposta di Copilot (l'icona con due fogli), oppure seleziona il testo del prompt e copialo.</p>
-        <p>In questa library ogni prompt ha il suo tasto <b>«Copia prompt»</b>.</p>
+        <p>In questa library ogni prompt ha il suo tasto <b><span class="nobr">«Copia prompt»</span></b>.</p>
       </div>
     </div>
     <aside class="tasti">
@@ -398,7 +452,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       <div class="passo-n">6</div>
       <div>
         <h3>Apri una nuova chat, incolla e riallega il documento</h3>
-        <p>Clicca su <b>«Nuova chat»</b>, incolla il prompt e <b>allega di nuovo lo stesso documento</b>: una chat nuova non vede gli allegati di quella precedente.</p>
+        <p>Clicca su <b><span class="nobr">«Nuova chat»</span></b>, incolla il prompt e <b>allega di nuovo lo stesso documento</b>: una chat nuova non vede gli allegati di quella precedente.</p>
         <p>Nella chat nuova Copilot parte pulito, senza le domande e le risposte di prima: il risultato dipende solo dal prompt.</p>
       </div>
     </div>
@@ -426,9 +480,9 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       <h4><svg class="ico"><use href="#i-check"/></svg>Da controllare</h4>
       <ul>
         <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Ogni dato ha la pagina o l'articolo: apri il documento a quella pagina e guarda se c'è davvero.</span></li>
-        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>«— NON NEL DOCUMENTO» è una risposta giusta: meglio un buco dichiarato di un valore inventato.</span></li>
+        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span><span class="nobr">«— NON NEL DOCUMENTO»</span> è una risposta giusta: meglio un buco dichiarato di un valore inventato.</span></li>
         <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Per totali e somme chiedi di <b>mostrare il calcolo</b>.</span></li>
-        <li class="no"><span class="k"><svg class="ico"><use href="#i-x"/></svg></span><span>Importi, date, CIG e scadenze non si prendono mai «a fiducia»: si verificano sul documento o sul gestionale.</span></li>
+        <li class="no"><span class="k"><svg class="ico"><use href="#i-x"/></svg></span><span>Importi, date, CIG e scadenze non si prendono mai <span class="nobr">«a fiducia»</span>: si verificano sul documento o sul gestionale.</span></li>
       </ul>
     </aside>
   </div>
@@ -438,88 +492,103 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       <div class="passo-n">8</div>
       <div>
         <h3>Salva il prompt che funziona</h3>
-        <p><b>In Copilot Chat:</b> passa con il mouse sul messaggio con il prompt, clicca l'icona del <b>segnalibro</b> e scegli <b>«Salva prompt»</b>. Lo ritrovi nella <b>raccolta dei prompt</b> (Prompt Gallery), nella scheda «I tuoi prompt», dall'icona sopra la casella di testo.</p>
-        <p><b>In questa library:</b> aggiungilo alla pagina del tuo reparto con <b>«+ Nuovo prompt»</b>, così lo usano anche i colleghi.</p>
+        <p><b>In Copilot Chat:</b> passa con il mouse sul messaggio con il prompt, clicca l'icona del <b>segnalibro</b> e scegli <b><span class="nobr">«Salva prompt»</span></b>. Lo ritrovi nella <b>raccolta dei prompt</b> (Prompt Gallery), nella scheda <span class="nobr">«I tuoi prompt»</span>, dall'icona sopra la casella di testo.</p>
+        <p><b>In questa library:</b> aggiungilo alla pagina del tuo reparto con <b><span class="nobr">«+ Nuovo prompt»</span></b>, così lo usano anche i colleghi.</p>
       </div>
     </div>
     <aside class="tasti">
       <h4><svg class="ico"><use href="#i-bookmark"/></svg>Da sapere</h4>
       <ul>
         <li class="attenzione"><span class="k"><svg class="ico"><use href="#i-alert"/></svg></span><span>In <b>Outlook</b> i prompt non si salvano: tienili qui.</span></li>
-        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Dai al prompt salvato un nome chiaro («Applicativo AQ → checklist gestionale»).</span></li>
+        <li class="ok"><span class="k"><svg class="ico"><use href="#i-check"/></svg></span><span>Dai al prompt salvato un nome chiaro (<span class="nobr">«Applicativo AQ → checklist gestionale»</span>).</span></li>
         <li class="no"><span class="k"><svg class="ico"><use href="#i-x"/></svg></span><span>Prima di salvarlo togli i dati del caso: nomi di persone, clienti, importi. Lascia le [parentesi quadre].</span></li>
       </ul>
     </aside>
   </div>
 </div>
 
-<section class="sezione">
-  <h2>Com'è fatto un buon prompt</h2>
-  <p class="lead">Tutti i prompt di questa library hanno la stessa struttura. Se ne scrivi uno nuovo, segui lo stesso schema.</p>
-  <div class="griglia">
-    <div class="box"><span class="tag">1 · Ruolo</span><h3>Chi deve essere Copilot</h3><p>«Sei l'assistente del back-office dell'ufficio Lavori del consorzio CONSCOOP.»</p></div>
-    <div class="box"><span class="tag">2 · Contesto</span><h3>Una riga su di noi</h3><p>«Consorzio di cooperative di costruzioni che partecipa ad appalti pubblici.»</p></div>
-    <div class="box"><span class="tag">3 · Compito</span><h3>Cosa deve fare, con quale documento</h3><p>«Ti allego un applicativo di Accordo Quadro. Estrai tutti i dati per inserirlo nel gestionale.»</p></div>
-    <div class="box"><span class="tag">4 · Regole ferree</span><h3>Cosa non deve mai fare</h3><p>Copiare i valori esatti, scrivere «— NON NEL DOCUMENTO» se un dato manca, citare pagina o articolo, non inventare.</p></div>
-    <div class="box"><span class="tag">5 · Formato</span><h3>Come vuoi la risposta</h3><p>Sezioni con un nome, tabelle con le colonne indicate («[ ] | Campo | Valore | Fonte»).</p></div>
-    <div class="box"><span class="tag">6 · Chiusura</span><h3>Cosa resta da fare a te</h3><p>La sezione «DA COMPLETARE A MANO» con i dati che il documento non ha e dove cercarli.</p></div>
-  </div>
-</section>
+<section class="approfondimenti">
+  <h2>Approfondimenti</h2>
+  <p class="lead">Aprili quando ti servono.</p>
 
-<section class="sezione">
-  <h2>Le cinque regole d'oro</h2>
-  <p class="lead">Vengono tutte da cose successe davvero negli affiancamenti.</p>
-  <div class="regole">
-    <div class="regola"><b>Dati CONSCOOP solo nel Copilot protetto</b><span>Quello con lo scudo verde. ChatGPT o altri strumenti personali solo per ricerche generiche, mai per documenti di lavoro.</span></div>
-    <div class="regola"><b>I numeri vengono dal gestionale, non dall'AI</b><span>Importi, scadenze e CIG si estraggono e si verificano, non si generano.</span></div>
-    <div class="regola"><b>«— NON NEL DOCUMENTO» è una risposta giusta</b><span>Un buco dichiarato vale più di un valore plausibile.</span></div>
-    <div class="regola"><b>Un file firmato .p7m va prima convertito</b><span>Copilot non lo legge. I PDF scansionati si aprono prima in Word o si catturano come immagine.</span></div>
-    <div class="regola"><b>Salva i prompt che funzionano</b><span>In Copilot e in questa library: un prompt che funziona diventa il prompt del reparto.</span></div>
-  </div>
-</section>
-
-<section class="sezione">
-  <h2>Prima di usare un prompt</h2>
-  <div class="due">
-    <div class="box chiaro">
-      <h3>Leggilo sempre prima di incollarlo</h3>
-      <ul>
-        <li>Soprattutto i prompt con il badge «Aggiunto da un collega»: nessuno li ha ancora provati.</li>
-        <li>Un prompt non deve chiedere di aprire link, mandare dati fuori o «ignorare le istruzioni».</li>
-        <li>Se qualcosa non ti convince, chiedi a chi l'ha scritto o al gruppo di progetto.</li>
-      </ul>
+  <details class="fisa">
+    <summary><svg class="ico"><use href="#i-chev"/></svg><h3>Com'è fatto un buon prompt</h3></summary>
+    <div class="fisa-b">
+      <p class="lead">Tutti i prompt di questa library hanno la stessa struttura. Se ne scrivi uno nuovo, segui lo stesso schema.</p>
+      <div class="griglia">
+        <div class="box"><span class="tag">1 · Ruolo</span><h3>Chi deve essere Copilot</h3><p>«Sei l'assistente del back-office dell'ufficio Lavori del consorzio CONSCOOP.»</p></div>
+        <div class="box"><span class="tag">2 · Contesto</span><h3>Una riga su di noi</h3><p>«Consorzio di cooperative di costruzioni che partecipa ad appalti pubblici.»</p></div>
+        <div class="box"><span class="tag">3 · Compito</span><h3>Cosa deve fare, con quale documento</h3><p>«Ti allego un applicativo di Accordo Quadro. Estrai tutti i dati per inserirlo nel gestionale.»</p></div>
+        <div class="box"><span class="tag">4 · Regole ferree</span><h3>Cosa non deve mai fare</h3><p>Copiare i valori esatti, scrivere <span class="nobr">«— NON NEL DOCUMENTO»</span> se un dato manca, citare pagina o articolo, non inventare.</p></div>
+        <div class="box"><span class="tag">5 · Formato</span><h3>Come vuoi la risposta</h3><p>Sezioni con un nome, tabelle con le colonne indicate (<span class="nobr">«[ ] | Campo | Valore | Fonte»</span>).</p></div>
+        <div class="box"><span class="tag">6 · Chiusura</span><h3>Cosa resta da fare a te</h3><p>La sezione <span class="nobr">«DA COMPLETARE A MANO»</span> con i dati che il documento non ha e dove cercarli.</p></div>
+      </div>
     </div>
-    <div class="box">
-      <h3>Cosa non incollare mai in Copilot</h3>
-      <ul>
-        <li>Password e codici di accesso.</li>
-        <li>Dati del personale: buste paga, presenze, ferie, salute.</li>
-        <li>Nei prompt che salvi qui: nomi di persone e di clienti, IBAN, codici fiscali.</li>
-      </ul>
+  </details>
+
+  <details class="fisa">
+    <summary><svg class="ico"><use href="#i-chev"/></svg><h3>Le cinque regole d'oro</h3></summary>
+    <div class="fisa-b">
+      <p class="lead">Vengono tutte da cose successe davvero negli affiancamenti.</p>
+      <ol class="regole">
+        <li class="regola"><b>Dati CONSCOOP solo nel Copilot protetto</b><span>Quello con lo scudo verde. ChatGPT o altri strumenti personali solo per ricerche generiche, mai per documenti di lavoro.</span></li>
+        <li class="regola"><b>I numeri vengono dal gestionale, non dall'AI</b><span>Importi, scadenze e CIG si estraggono e si verificano, non si generano.</span></li>
+        <li class="regola"><b><span class="nobr">«— NON NEL DOCUMENTO»</span> è una risposta giusta</b><span>Un buco dichiarato vale più di un valore plausibile.</span></li>
+        <li class="regola"><b>Un file firmato .p7m va prima convertito</b><span>Copilot non lo legge. I PDF scansionati si aprono prima in Word o si catturano come immagine.</span></li>
+        <li class="regola"><b>Salva i prompt che funzionano</b><span>In Copilot e in questa library: un prompt che funziona diventa il prompt del reparto.</span></li>
+      </ol>
     </div>
-  </div>
-</section>
+  </details>
 
-<section class="sezione">
-  <h2>Prompt o software?</h2>
-  <div class="due">
-    <div class="box"><span class="tag">Copilot</span><h3>Una volta, con una domanda</h3><p>Leggere un contratto, preparare una risposta, controllare un elenco. Il prompt con le regole ferree basta.</p></div>
-    <div class="box"><span class="tag">App o IT</span><h3>Ogni giorno, uguale, senza sbagliare</h3><p>Calcoli ripetuti su dati del gestionale, numeri che devono quadrare al centesimo: serve uno strumento che dia sempre lo stesso risultato. Per questi casi ci sono le app dedicate e i progetti con l'IT.</p></div>
-  </div>
-</section>
+  <details class="fisa">
+    <summary><svg class="ico"><use href="#i-chev"/></svg><h3>Prima di usare un prompt</h3></summary>
+    <div class="fisa-b">
+      <div class="due">
+        <div class="box chiaro">
+          <h3>Leggilo sempre prima di incollarlo</h3>
+          <ul>
+            <li>Soprattutto i prompt con il badge <span class="nobr">«Aggiunto da un collega»</span>: nessuno li ha ancora provati.</li>
+            <li>Un prompt non deve chiedere di aprire link, mandare dati fuori o <span class="nobr">«ignorare le istruzioni»</span>.</li>
+            <li>Se qualcosa non ti convince, chiedi a chi l'ha scritto o al gruppo di progetto.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Cosa non incollare mai in Copilot</h3>
+          <ul>
+            <li>Password e codici di accesso.</li>
+            <li>Dati del personale: buste paga, presenze, ferie, salute.</li>
+            <li>Nei prompt che salvi qui: nomi di persone e di clienti, IBAN, codici fiscali.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </details>
 
-<section class="sezione">
-  <h2>Tutti i tasti in una tabella</h2>
-  <table class="tabella-tasti">
-    <tr><td><kbd>Invio</kbd></td><td>Invia il messaggio a Copilot.</td></tr>
-    <tr><td><kbd>Maiusc</kbd> <kbd>Invio</kbd></td><td>Va a capo nella casella senza inviare.</td></tr>
-    <tr><td><kbd>/</kbd></td><td>Nella casella di Copilot: richiama un file di OneDrive o SharePoint.</td></tr>
-    <tr><td><kbd>Ctrl</kbd> <kbd>C</kbd> · <kbd>Ctrl</kbd> <kbd>V</kbd></td><td>Copia · incolla.</td></tr>
-    <tr><td><kbd>Ctrl</kbd> <kbd>A</kbd></td><td>Seleziona tutto.</td></tr>
-    <tr><td><kbd>Ctrl</kbd> <kbd>T</kbd></td><td>In Excel: formatta i dati selezionati come tabella (serve a Copilot in Excel).</td></tr>
-    <tr><td><kbd>Win</kbd> <kbd>H</kbd></td><td>Dettatura vocale di Windows.</td></tr>
-    <tr><td><kbd>Win</kbd> <kbd>Maiusc</kbd> <kbd>S</kbd></td><td>Cattura di una parte dello schermo, da incollare in chat (per i PDF scansionati).</td></tr>
-  </table>
+  <details class="fisa">
+    <summary><svg class="ico"><use href="#i-chev"/></svg><h3>Prompt o software?</h3></summary>
+    <div class="fisa-b">
+      <div class="due">
+        <div class="box"><span class="tag">Copilot</span><h3>Una volta, con una domanda</h3><p>Leggere un contratto, preparare una risposta, controllare un elenco. Il prompt con le regole ferree basta.</p></div>
+        <div class="box"><span class="tag">App o IT</span><h3>Ogni giorno, uguale, senza sbagliare</h3><p>Calcoli ripetuti su dati del gestionale, numeri che devono quadrare al centesimo: serve uno strumento che dia sempre lo stesso risultato. Per questi casi ci sono le app dedicate e i progetti con l'IT.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fisa">
+    <summary><svg class="ico"><use href="#i-chev"/></svg><h3>Tutti i tasti utili in una tabella</h3></summary>
+    <div class="fisa-b">
+      <table class="tabella-tasti">
+        <tr><td><kbd>Invio</kbd></td><td>Invia il messaggio a Copilot.</td></tr>
+        <tr><td><kbd>Maiusc</kbd> <kbd>Invio</kbd></td><td>Va a capo nella casella senza inviare.</td></tr>
+        <tr><td><kbd>/</kbd></td><td>Nella casella di Copilot: richiama un file di OneDrive o SharePoint.</td></tr>
+        <tr><td><kbd>Ctrl</kbd> <kbd>C</kbd> · <kbd>Ctrl</kbd> <kbd>V</kbd></td><td>Copia · incolla.</td></tr>
+        <tr><td><kbd>Ctrl</kbd> <kbd>A</kbd></td><td>Seleziona tutto.</td></tr>
+        <tr><td><kbd>Ctrl</kbd> <kbd>T</kbd></td><td>In Excel: formatta i dati selezionati come tabella (serve a Copilot in Excel).</td></tr>
+        <tr><td><kbd>Win</kbd> <kbd>H</kbd></td><td>Dettatura vocale di Windows.</td></tr>
+        <tr><td><kbd>Win</kbd> <kbd>Maiusc</kbd> <kbd>S</kbd></td><td>Cattura di una parte dello schermo, da incollare in chat (per i PDF scansionati).</td></tr>
+      </table>
+    </div>
+  </details>
 </section>
 </div>
     <div id="p-rep" class="hidden"></div>
@@ -529,7 +598,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
 
 <!-- Nuovo prompt -->
 <dialog id="dlg-nuovo" aria-labelledby="dlg-t">
-  <form id="f-nuovo" method="dialog">
+  <form id="f-nuovo" method="dialog" novalidate>
     <div class="dlg-h"><h2 id="dlg-t">Nuovo prompt</h2><button class="btn-ico" type="button" id="b-chiudi" aria-label="Chiudi"><svg class="ico"><use href="#i-x"/></svg></button></div>
     <div class="dlg-b">
       <div id="nuovo-err" class="errore hidden" role="alert"></div>
@@ -544,15 +613,27 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
         <div class="campo" id="c-catn"><label for="n-catn">Nome della nuova categoria</label><input id="n-catn" maxlength="150"></div>
       </div>
       <div class="campo"><label for="n-tit">Titolo del prompt</label><input id="n-tit" maxlength="200" required placeholder="Es. Scadenze da una lettera della stazione appaltante"></div>
-      <div class="campo"><label for="n-des">A cosa serve</label><textarea id="n-des" maxlength="2000" class="testo" placeholder="Una o due righe: in quale situazione si usa e cosa si ottiene."></textarea></div>
-      <div class="campo"><label for="n-doc">Documenti a cui si applica</label><input id="n-doc" maxlength="1000" placeholder="Es. lettera o PEC della stazione appaltante (PDF); export di Business Central in Excel"><small>Il tipo di documento da allegare, non il file: non si carica nessun documento.</small></div>
-      <div class="campo"><label for="n-uso">Come si usa (facoltativo)</label><textarea id="n-uso" class="testo" maxlength="3000" placeholder="Un passo per riga."></textarea></div>
       <div class="campo"><label for="n-pro">Prompt</label><textarea id="n-pro" maxlength="20000" required></textarea></div>
-      <div class="campo"><label for="n-ctr">Prompt di controllo (facoltativo)</label><textarea id="n-ctr" maxlength="10000" placeholder="La seconda domanda da fare nella stessa chat per controllare il risultato."></textarea></div>
-      <div class="campo"><label for="n-aut">Il tuo nome (facoltativo)</label><input id="n-aut" maxlength="80" placeholder="Es. Nome – ufficio"></div>
+      <div class="campo"><label for="n-doc">Documenti a cui si applica</label><input id="n-doc" maxlength="1000" placeholder="Es. lettera o PEC della stazione appaltante (PDF); export di Business Central in Excel"><small>Il tipo di documento da allegare, non il file: non si carica nessun documento.</small></div>
+      <div class="campo"><label for="n-des">A cosa serve</label><textarea id="n-des" maxlength="2000" class="testo" placeholder="Una o due righe: in quale situazione si usa e cosa si ottiene."></textarea></div>
+      <details class="altri" id="n-altri">
+        <summary><svg class="ico"><use href="#i-chev"/></svg>Altri dettagli</summary>
+        <div class="altri-b">
+          <div class="campo"><label for="n-uso">Come si usa (facoltativo)</label><textarea id="n-uso" class="testo" maxlength="3000" placeholder="Un passo per riga."></textarea></div>
+          <div class="campo"><label for="n-ctr">Prompt di controllo (facoltativo)</label><textarea id="n-ctr" maxlength="10000" placeholder="La seconda domanda da fare nella stessa chat per controllare il risultato."></textarea></div>
+          <div class="campo"><label for="n-aut">Il tuo nome (facoltativo)</label><input id="n-aut" maxlength="80" placeholder="Es. Nome – ufficio"></div>
+        </div>
+      </details>
     </div>
     <div class="dlg-f"><button class="btn btn-s" type="button" id="b-annulla">Annulla</button><button class="btn btn-p" type="submit" id="b-salva"><svg class="ico"><use href="#i-plus"/></svg>Aggiungi alla library</button></div>
   </form>
+</dialog>
+
+<!-- Conferma (eliminazione) e messaggi -->
+<dialog id="dlg-conf" class="piccola" aria-labelledby="conf-t" aria-describedby="conf-m">
+  <div class="dlg-h"><h2 id="conf-t"></h2></div>
+  <div class="dlg-b"><p id="conf-m"></p></div>
+  <div class="dlg-f"><button class="btn btn-s" type="button" id="conf-no">Annulla</button><button class="btn btn-rosso" type="button" id="conf-si"></button></div>
 </dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -740,17 +821,26 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
     var p = stato.sessione.profilo;
     return ["home", "generali"].concat(p.admin ? REPARTI.map(function (r) { return r.toLowerCase(); }) : [p.reparto.toLowerCase()]);
   }
+  // dopo l'accesso si apre la pagina del proprio reparto; l'amministratore, che non ne ha uno, parte dai prompt generali
+  function paginaIniziale() {
+    var p = stato.sessione.profilo;
+    return p.reparto ? p.reparto.toLowerCase() : "generali";
+  }
   function disegnaNav() {
     var nav = $("nav"); nav.textContent = "";
-    pagineVisibili().forEach(function (k) {
-      nav.appendChild(h("a", { href: "#" + k, "data-k": k, text: k === "home" ? "Come si fa un prompt" : k === "generali" ? "Prompt generali" : SLUG[k] }));
+    var pagine = pagineVisibili().filter(function (k) { return k !== "home"; }); // la guida sta nel pulsante «Guida» in alto a destra
+    var prima = paginaIniziale();
+    pagine.sort(function (a, b) { return (b === prima) - (a === prima); });
+    pagine.forEach(function (k) {
+      nav.appendChild(h("a", { href: "#" + k, "data-k": k, text: k === "generali" ? "Prompt generali" : SLUG[k] }));
     });
   }
   function vai() {
     if (!stato.sessione) return;
-    var k = (location.hash || "#home").slice(1).toLowerCase();
-    if (pagineVisibili().indexOf(k) < 0) k = "home";
+    var k = location.hash.slice(1).toLowerCase() || paginaIniziale();
+    if (pagineVisibili().indexOf(k) < 0) k = paginaIniziale();
     Array.prototype.forEach.call($("nav").children, function (a) { if (a.getAttribute("data-k") === k) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (k === "home") $("b-guida").setAttribute("aria-current", "page"); else $("b-guida").removeAttribute("aria-current");
     $("p-home").classList.toggle("hidden", k !== "home");
     $("p-rep").classList.toggle("hidden", k === "home");
     if (k !== "home") { stato.filtro = { q: "", stato: "tutti", cat: "" }; disegnaReparto(SLUG[k]); }
@@ -776,18 +866,16 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       h("div", null,
         h("div", { class: "eyebrow", text: rep === "Generali" ? "Tutti i reparti" : "Reparto" }),
         h("h1", { text: titolo }),
-        h("p", { class: "lead", text: sotto }),
-        h("div", { class: "numeri" },
-          h("span", null, h("b", { text: String(conta("pronto")) }), " pronti"),
-          h("span", null, h("b", { text: String(conta("bozza")) }), " da provare"),
-          h("span", null, h("b", { text: String(conta("collega")) }), " dei colleghi"))),
+        h("p", { class: "lead", text: sotto })),
       h("button", { class: "btn btn-p", type: "button", on: { click: function () { apriNuovo(rep); } } }, ico("plus"), "Nuovo prompt")));
 
     var selCat = h("select", { "aria-label": "Categoria", on: { change: function (e) { stato.filtro.cat = e.target.value; elenco(); } } },
       h("option", { value: "", text: "Tutte le categorie" }), cats.map(function (c) { return h("option", { value: c, text: c }); }));
     var chips = h("div", { class: "chips", role: "group", "aria-label": "Stato" });
+    // il numero di prompt sta dentro ogni filtro, al posto della riga di contatori sotto il titolo
     [["tutti", "Tutti"], ["pronto", "Pronti"], ["bozza", "Da provare"], ["collega", "Dei colleghi"]].forEach(function (c) {
-      chips.appendChild(h("button", { class: "chip", type: "button", "aria-pressed": String(stato.filtro.stato === c[0]), text: c[1], on: { click: function () {
+      var n = c[0] === "tutti" ? tutti.length : conta(c[0]);
+      chips.appendChild(h("button", { class: "chip", type: "button", "aria-pressed": String(stato.filtro.stato === c[0]), text: c[1] + " (" + n + ")", on: { click: function () {
         stato.filtro.stato = c[0]; Array.prototype.forEach.call(chips.children, function (b) { b.setAttribute("aria-pressed", String(b === this)); }, this); elenco();
       } } }));
     });
@@ -856,7 +944,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
         h("div", { class: "t" }, ico("chev"), h("span", { text: x.titolo })),
         h("div", { class: "azioni" },
           h("span", { class: "badge " + st, text: STATI[st] }),
-          h("button", { class: "btn btn-sm btn-s", type: "button", title: "Copia il prompt", on: { click: function (e) { e.preventDefault(); e.stopPropagation(); copia(x.prompt || ""); } } }, ico("copy"), "Copia")),
+          h("button", { class: "btn btn-p", type: "button", title: "Copia il prompt", on: { click: function (e) { e.preventDefault(); e.stopPropagation(); copia(x.prompt || ""); } } }, ico("copy"), "Copia prompt")),
         h("div", { class: "meta" },
           x.strumento ? h("span", null, ico("tool"), x.strumento.length > 70 ? x.strumento.slice(0, 68) + "…" : x.strumento) : null,
           x.documenti ? h("span", null, ico("file"), x.documenti.length > 90 ? x.documenti.slice(0, 88) + "…" : x.documenti) : null)),
@@ -867,7 +955,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
   var dlg = $("dlg-nuovo");
   function apriNuovo(rep) {
     mostraErr("nuovo-err", "");
-    $("f-nuovo").reset();
+    $("f-nuovo").reset(); pulisciErrori(); $("n-altri").open = false;
     var p = stato.sessione.profilo;
     var sel = $("n-rep"); sel.textContent = "";
     (p.admin ? REPARTI.concat(["Generali"]) : [p.reparto, "Generali"]).forEach(function (r) {
@@ -892,13 +980,31 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
   $("b-chiudi").addEventListener("click", chiudi);
   $("b-annulla").addEventListener("click", chiudi);
 
+  // errori del modulo: il messaggio compare sotto il campo da correggere, non in cima alla finestra
+  function erroreCampo(id, msg) {
+    var el = $(id), c = el.closest(".campo"), m = c.querySelector(".msg-err");
+    if (!m) { m = h("div", { class: "msg-err", id: "err-" + id }); c.appendChild(m); }
+    m.textContent = ""; aggiungi(m, [ico("alert"), h("span", { text: msg })]);
+    c.classList.add("err"); el.setAttribute("aria-invalid", "true"); el.setAttribute("aria-describedby", "err-" + id);
+  }
+  function pulisciCampo(c) {
+    if (!c || !c.classList.contains("err")) return;
+    c.classList.remove("err");
+    var m = c.querySelector(".msg-err"); if (m) c.removeChild(m);
+    Array.prototype.forEach.call(c.querySelectorAll("[aria-invalid]"), function (el) { el.removeAttribute("aria-invalid"); el.removeAttribute("aria-describedby"); });
+  }
+  function pulisciErrori() { Array.prototype.forEach.call($("f-nuovo").querySelectorAll(".campo.err"), pulisciCampo); }
+  function suModifica(e) { if (e.target.closest) pulisciCampo(e.target.closest(".campo")); }
+  $("f-nuovo").addEventListener("input", suModifica);
+  $("f-nuovo").addEventListener("change", suModifica);
+
   var RX_SENSIBILI = [
     [/\bIT\d{2}[A-Z]\d{10}[0-9A-Z]{12}\b/i, "un IBAN"],
     [/\b[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]\b/i, "un codice fiscale"],
     [/password\s*[:=]/i, "una password"]
   ];
   $("f-nuovo").addEventListener("submit", function (e) {
-    e.preventDefault(); mostraErr("nuovo-err", "");
+    e.preventDefault(); mostraErr("nuovo-err", ""); pulisciErrori();
     var cat = $("n-cat").value === "__nuova" ? $("n-catn").value.trim() : $("n-cat").value;
     var riga = {
       reparto: $("n-rep").value, categoria: cat, titolo: $("n-tit").value.trim(), descrizione: $("n-des").value.trim(),
@@ -906,12 +1012,22 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       come_si_usa: $("n-uso").value.split("\n").map(function (s) { return s.replace(/^\s*(\d+[.)]|-)\s*/, "").trim(); }).filter(Boolean).slice(0, 15),
       prompt: $("n-pro").value.trim(), prompt_controllo: $("n-ctr").value.trim(), autore: $("n-aut").value.trim()
     };
-    if (cat.length < 2) return mostraErr("nuovo-err", "Scegli una categoria o scrivi il nome di quella nuova.");
-    if (riga.titolo.length < 3) return mostraErr("nuovo-err", "Scrivi un titolo di almeno 3 caratteri.");
-    if (riga.prompt.length < 10) return mostraErr("nuovo-err", "Incolla il testo del prompt.");
-    var tutto = [riga.titolo, riga.descrizione, riga.documenti, riga.prompt, riga.prompt_controllo].join("\n");
-    for (var i = 0; i < RX_SENSIBILI.length; i++) {
-      if (RX_SENSIBILI[i][0].test(tutto)) return mostraErr("nuovo-err", "Il testo sembra contenere " + RX_SENSIBILI[i][1] + ": toglilo e usa una [parentesi quadra] al suo posto.");
+    var errori = [];
+    if (cat.length < 2) errori.push([$("n-cat").value === "__nuova" ? "n-catn" : "n-cat", "Scrivi il nome della nuova categoria (almeno 2 caratteri)."]);
+    if (riga.titolo.length < 3) errori.push(["n-tit", riga.titolo ? "Il titolo è troppo corto: almeno 3 caratteri." : "Scrivi il titolo del prompt."]);
+    if (riga.prompt.length < 10) errori.push(["n-pro", riga.prompt ? "Il prompt è troppo corto: incollalo tutto." : "Incolla qui il testo del prompt."]);
+    ["n-tit", "n-des", "n-doc", "n-pro", "n-ctr"].forEach(function (id) {
+      if (errori.some(function (x) { return x[0] === id; })) return;
+      for (var i = 0; i < RX_SENSIBILI.length; i++) {
+        if (RX_SENSIBILI[i][0].test($(id).value)) { errori.push([id, "Qui sembra esserci " + RX_SENSIBILI[i][1] + ". Al suo posto usa una [parentesi quadra]."]); return; }
+      }
+    });
+    if (errori.length) {
+      errori.forEach(function (x) { erroreCampo(x[0], x[1]); });
+      var primo = $(errori[0][0]);
+      if (primo.closest("#n-altri")) $("n-altri").open = true;
+      primo.focus(); primo.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
     }
     var b = $("b-salva"); b.disabled = true;
     var p;
@@ -930,11 +1046,33 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       if ((location.hash || "").slice(1).toLowerCase() === k) vai(); else location.hash = "#" + k;
     }).catch(function (err) {
       mostraErr("nuovo-err", err.status === 401 || err.status === 403 ? "Non hai il permesso di aggiungere prompt in questa pagina, oppure l'accesso è scaduto: esci e rientra." : "Il prompt non è stato salvato: " + err.message);
+      $("nuovo-err").scrollIntoView({ block: "center", behavior: "smooth" }); // errore del server: non riguarda un campo, lo mostriamo in cima
     }).then(function () { b.disabled = false; });
   });
 
+  // ---------- finestra di conferma con i colori del sito (al posto di confirm/alert del browser) ----------
+  var conf = $("dlg-conf"), confRisposta = null;
+  function chiedi(titolo, msg, etichetta, soloOk) {
+    $("conf-t").textContent = titolo; $("conf-m").textContent = msg; $("conf-si").textContent = etichetta;
+    $("conf-si").className = "btn " + (soloOk ? "btn-p" : "btn-rosso");
+    $("conf-no").classList.toggle("hidden", !!soloOk);
+    if (conf.showModal) conf.showModal(); else conf.setAttribute("open", "");
+    $(soloOk ? "conf-si" : "conf-no").focus(); // con Invio non si elimina per sbaglio
+    return new Promise(function (r) { confRisposta = r; });
+  }
+  function chiudiConf(v) {
+    if (conf.close) conf.close(); else conf.removeAttribute("open");
+    if (confRisposta) { var r = confRisposta; confRisposta = null; r(v); }
+  }
+  $("conf-si").addEventListener("click", function () { chiudiConf(true); });
+  $("conf-no").addEventListener("click", function () { chiudiConf(false); });
+  conf.addEventListener("cancel", function (e) { e.preventDefault(); chiudiConf(false); }); // tasto Esc
+
   function elimina(x) {
-    if (!confirm("Eliminare il prompt «" + x.titolo + "»? I colleghi non lo vedranno più.")) return;
+    chiedi("Eliminare questo prompt?", "«" + x.titolo + "» sparirà per tutti i colleghi. Non si può annullare.", "Elimina", false)
+      .then(function (si) { if (si) eliminaConfermato(x); });
+  }
+  function eliminaConfermato(x) {
     var p;
     if (ANTEPRIMA) {
       scrivi("pl_anteprima", (leggi("pl_anteprima") || []).filter(function (y) { return y.id !== x.id; })); p = Promise.resolve([x]);
@@ -945,7 +1083,7 @@ dialog::backdrop{background:rgba(2,20,30,.5)}
       if (!Array.isArray(d) || !d.length) throw new Error("il database non ha eliminato il prompt (permesso mancante)");
       stato.prompt = stato.prompt.filter(function (y) { return y.id !== x.id; });
       toast("Prompt eliminato"); vai();
-    }).catch(function (err) { alert("Non è stato possibile eliminare il prompt: " + err.message); });
+    }).catch(function (err) { chiedi("Prompt non eliminato", "Non è stato possibile eliminare il prompt: " + err.message, "Ho capito", true); });
   }
 
   // ---------- avvio ----------
