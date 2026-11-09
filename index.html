@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-J5IM5jO1SLb7H3OQrf4cke/eCTeOK6fPxyNvUuk9w2g='; style-src 'sha256-uo/SUUa7eiKrzS5NiH1sjOQ+EPoS9Q4IAXw8vi1FS+0=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-0p5sb/PUjr+mTOmV1noeKbV8m1nYuahsIvDybxaG5YU='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -228,6 +228,7 @@ main{max-width:1280px;margin:0 auto;padding:28px 20px 80px}
 .avviso{font-size:var(--fs-sm);border-radius:8px;padding:10px 14px;background:var(--ambra-tint);color:var(--testo);border-left:3px solid var(--ambra)}
 .avviso.blu{background:var(--blu-1);border-left-color:var(--blu-medio)}
 .dlg-b>.avviso{margin-bottom:16px}
+.piede-azioni{display:flex;gap:8px;flex-wrap:wrap}
 .piede-card{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--grigio);border-top:1px solid var(--linea);padding-top:12px}
 
 /* ===== finestre (nuovo prompt, conferma) ===== */
@@ -296,6 +297,7 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
   <symbol id="i-tool" viewBox="0 0 24 24"><path d="M4 5h16v11H4z"/><path d="M8 20h8M12 16v4"/></symbol>
@@ -621,6 +623,8 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
         <div class="altri-b">
           <div class="campo"><label for="n-uso">Come si usa (facoltativo)</label><textarea id="n-uso" class="testo" maxlength="3000" placeholder="Un passo per riga."></textarea></div>
           <div class="campo"><label for="n-ctr">Prompt di controllo (facoltativo)</label><textarea id="n-ctr" maxlength="10000" placeholder="La seconda domanda da fare nella stessa chat per controllare il risultato."></textarea></div>
+          <div class="campo"><label for="n-not">Note (facoltativo)</label><textarea id="n-not" class="testo" maxlength="3000" placeholder="Avvertenze o consigli da mostrare sotto il prompt."></textarea></div>
+          <div class="campo hidden" id="c-sta"><label for="n-sta">Stato</label><select id="n-sta"><option value="pronto">Pronto</option><option value="bozza">Da provare</option><option value="collega">Aggiunto da un collega</option></select><small>Solo l'amministratore può cambiare lo stato.</small></div>
           <div class="campo"><label for="n-aut">Il tuo nome (facoltativo)</label><input id="n-aut" maxlength="80" placeholder="Es. Nome – ufficio"></div>
         </div>
       </details>
@@ -760,7 +764,8 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       return fetch("prompt_base.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
         var p = stato.sessione.profilo;
         var nuovi = leggi("pl_anteprima") || [];
-        stato.prompt = d.map(function (x) { x.base = true; return x; }).concat(nuovi).filter(function (x) {
+        var mod = leggi("pl_anteprima_mod") || {};
+        stato.prompt = d.map(function (x) { x.base = true; return Object.assign(x, mod[x.id] || {}); }).concat(nuovi).filter(function (x) {
           return p.admin || x.reparto === "Generali" || x.reparto === p.reparto;
         });
       });
@@ -853,6 +858,12 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
     var p = stato.sessione.profilo;
     return !x.base && (p.admin || (p.reparto && x.creato_da === p.reparto));
   }
+  // si possono modificare tutti i prompt delle pagine in cui si può anche aggiungere: il proprio reparto e i prompt generali
+  // (l'amministratore tutti). L'ultima parola spetta comunque al database (supabase/modifica_prompt.sql).
+  function puoModificare(x) {
+    var p = stato.sessione.profilo;
+    return p.admin || x.reparto === "Generali" || (p.reparto && x.reparto === p.reparto);
+  }
   function disegnaReparto(rep) {
     var box = $("p-rep"); box.textContent = "";
     var tutti = stato.prompt.filter(function (x) { return x.reparto === rep; });
@@ -935,9 +946,11 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       altri.map(function (a) { return bloccoPrompt(a.etichetta || "Domanda successiva", a.testo, false); }),
       x.note ? h("div", { class: "avviso blu", text: x.note }) : null,
       st === "bozza" && serve.length ? h("div", null, h("h4", { text: "Cosa serve per provarlo" }), h("ul", null, serve.map(function (u) { return h("li", { text: u }); }))) : null,
-      !x.base ? h("div", { class: "piede-card" },
-        h("span", { text: "Aggiunto" + (x.autore ? " da " + x.autore : "") + (x.creato_da ? " · " + x.creato_da : "") + (x.created_at ? " · " + new Date(x.created_at).toLocaleDateString("it-IT") : "") }),
-        puoEliminare(x) ? h("button", { class: "btn btn-sm btn-d", type: "button", on: { click: function () { elimina(x); } } }, ico("trash"), "Elimina") : null) : null);
+      !x.base || puoModificare(x) ? h("div", { class: "piede-card" },
+        h("span", { text: x.base ? "" : "Aggiunto" + (x.autore ? " da " + x.autore : "") + (x.creato_da ? " · " + x.creato_da : "") + (x.created_at ? " · " + new Date(x.created_at).toLocaleDateString("it-IT") : "") }),
+        h("span", { class: "piede-azioni" },
+          puoModificare(x) ? h("button", { class: "btn btn-sm btn-s", type: "button", on: { click: function () { apriNuovo(x.reparto, x); } } }, ico("edit"), "Modifica") : null,
+          puoEliminare(x) ? h("button", { class: "btn btn-sm btn-d", type: "button", on: { click: function () { elimina(x); } } }, ico("trash"), "Elimina") : null)) : null);
 
     return h("details", { class: "card" },
       h("summary", null,
@@ -951,9 +964,11 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       corpo);
   }
 
-  // ---------- nuovo prompt ----------
+  // ---------- nuovo prompt e modifica (stessa finestra) ----------
   var dlg = $("dlg-nuovo");
-  function apriNuovo(rep) {
+  var inModifica = null; // il prompt che si sta modificando, null se se ne crea uno nuovo
+  function apriNuovo(rep, x) {
+    inModifica = x || null;
     mostraErr("nuovo-err", "");
     $("f-nuovo").reset(); pulisciErrori(); $("n-altri").open = false;
     var p = stato.sessione.profilo;
@@ -963,6 +978,22 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
     });
     sel.value = rep;
     aggiornaCategorie();
+    $("dlg-t").textContent = x ? "Modifica prompt" : "Nuovo prompt";
+    var b = $("b-salva"); b.textContent = ""; aggiungi(b, x ? [ico("check"), "Salva modifiche"] : [ico("plus"), "Aggiungi alla library"]);
+    $("c-sta").classList.toggle("hidden", !(x && p.admin));
+    if (x) {
+      if (x.categoria && Array.prototype.some.call($("n-cat").options, function (o) { return o.value === x.categoria; })) $("n-cat").value = x.categoria;
+      else { $("n-cat").value = "__nuova"; $("n-catn").value = x.categoria || ""; }
+      $("c-catn").classList.toggle("hidden", $("n-cat").value !== "__nuova");
+      var str = $("n-str");
+      if (x.strumento && !Array.prototype.some.call(str.options, function (o) { return o.value === x.strumento; })) str.appendChild(h("option", { value: x.strumento, text: x.strumento }));
+      if (x.strumento) str.value = x.strumento;
+      $("n-tit").value = x.titolo || ""; $("n-pro").value = x.prompt || ""; $("n-doc").value = x.documenti || "";
+      $("n-des").value = x.descrizione || ""; $("n-uso").value = lista(x.come_si_usa).join("\n");
+      $("n-ctr").value = x.prompt_controllo || ""; $("n-not").value = x.note || ""; $("n-aut").value = x.autore || "";
+      $("n-sta").value = x.stato || "collega";
+      if (x.come_si_usa && lista(x.come_si_usa).length || x.prompt_controllo || x.note) $("n-altri").open = true;
+    }
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
     $("n-tit").focus();
   }
@@ -1012,11 +1043,15 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       come_si_usa: $("n-uso").value.split("\n").map(function (s) { return s.replace(/^\s*(\d+[.)]|-)\s*/, "").trim(); }).filter(Boolean).slice(0, 15),
       prompt: $("n-pro").value.trim(), prompt_controllo: $("n-ctr").value.trim(), autore: $("n-aut").value.trim()
     };
+    var nota = $("n-not").value.trim();
+    if (nota || inModifica) riga.note = nota;
+    var x = inModifica;
+    if (x && stato.sessione.profilo.admin) riga.stato = $("n-sta").value;
     var errori = [];
     if (cat.length < 2) errori.push([$("n-cat").value === "__nuova" ? "n-catn" : "n-cat", "Scrivi il nome della nuova categoria (almeno 2 caratteri)."]);
     if (riga.titolo.length < 3) errori.push(["n-tit", riga.titolo ? "Il titolo è troppo corto: almeno 3 caratteri." : "Scrivi il titolo del prompt."]);
     if (riga.prompt.length < 10) errori.push(["n-pro", riga.prompt ? "Il prompt è troppo corto: incollalo tutto." : "Incolla qui il testo del prompt."]);
-    ["n-tit", "n-des", "n-doc", "n-pro", "n-ctr"].forEach(function (id) {
+    ["n-tit", "n-des", "n-doc", "n-pro", "n-ctr", "n-not"].forEach(function (id) {
       if (errori.some(function (x) { return x[0] === id; })) return;
       for (var i = 0; i < RX_SENSIBILI.length; i++) {
         if (RX_SENSIBILI[i][0].test($(id).value)) { errori.push([id, "Qui sembra esserci " + RX_SENSIBILI[i][1] + ". Al suo posto usa una [parentesi quadra]."]); return; }
@@ -1031,6 +1066,26 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
     }
     var b = $("b-salva"); b.disabled = true;
     var p;
+    if (x) {
+      if (ANTEPRIMA) {
+        var mod = leggi("pl_anteprima_mod") || {}; mod[x.id] = Object.assign(mod[x.id] || {}, riga); scrivi("pl_anteprima_mod", mod);
+        var nv = leggi("pl_anteprima") || []; nv.forEach(function (y) { if (y.id === x.id) Object.assign(y, riga); }); scrivi("pl_anteprima", nv);
+        p = Promise.resolve([Object.assign({}, x, riga)]);
+      } else {
+        p = rinnova().then(function () { return api("/rest/v1/prompts?id=eq." + encodeURIComponent(x.id), { method: "PATCH", body: riga, headers: { Prefer: "return=representation" } }); });
+      }
+      p.then(function (d) {
+        if (!Array.isArray(d) || !d.length) { var e403 = new Error("permesso"); e403.status = 403; throw e403; }
+        stato.prompt = stato.prompt.map(function (y) { return y.id === x.id ? Object.assign({}, y, d[0]) : y; });
+        chiudi(); toast("Modifiche salvate");
+        var k = riga.reparto.toLowerCase();
+        if ((location.hash || "").slice(1).toLowerCase() === k) vai(); else location.hash = "#" + k;
+      }).catch(function (err) {
+        mostraErr("nuovo-err", err.status === 401 || err.status === 403 ? "Non hai il permesso di modificare questo prompt, oppure l'accesso è scaduto: esci e rientra." : "Le modifiche non sono state salvate: " + err.message);
+        $("nuovo-err").scrollIntoView({ block: "center", behavior: "smooth" });
+      }).then(function () { b.disabled = false; });
+      return;
+    }
     if (ANTEPRIMA) {
       riga.id = "anteprima-" + Date.now(); riga.stato = "collega"; riga.base = false;
       riga.creato_da = stato.sessione.profilo.admin ? "Admin" : stato.sessione.profilo.reparto; riga.created_at = new Date().toISOString();
