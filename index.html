@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vCjPClnmD8rOY2rgQX4Yy5Y9Q5v54gVHcKq+bA+XBYY='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-OlgJLbNOVlzJGjdn0+X/e4zCc1ZpnJWObB0X6wYeZrA='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -617,7 +617,6 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       <div class="campo"><label for="n-tit">Titolo del prompt</label><input id="n-tit" maxlength="200" required placeholder="Es. Scadenze da una lettera della stazione appaltante"></div>
       <div class="campo"><label for="n-pro">Prompt</label><textarea id="n-pro" maxlength="20000" required></textarea></div>
       <div class="campo"><label for="n-doc">Documenti a cui si applica</label><input id="n-doc" maxlength="1000" placeholder="Es. lettera o PEC della stazione appaltante (PDF); export di Business Central in Excel"><small>Il tipo di documento da allegare, non il file: non si carica nessun documento.</small></div>
-      <div class="campo"><label for="n-des">A cosa serve</label><textarea id="n-des" maxlength="2000" class="testo" placeholder="Una o due righe: in quale situazione si usa e cosa si ottiene."></textarea></div>
       <details class="altri" id="n-altri">
         <summary><svg class="ico"><use href="#i-chev"/></svg>Altri dettagli</summary>
         <div class="altri-b">
@@ -903,7 +902,7 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
         if (stato.filtro.stato !== "tutti" && (x.stato || "collega") !== stato.filtro.stato) return false;
         if (stato.filtro.cat && x.categoria !== stato.filtro.cat) return false;
         if (!q) return true;
-        return [x.titolo, x.categoria, x.descrizione, x.documenti, x.strumento, x.prompt].join(" ").toLowerCase().indexOf(q) >= 0;
+        return [x.titolo, x.categoria, x.documenti, x.strumento, x.prompt].join(" ").toLowerCase().indexOf(q) >= 0;
       });
       if (!vis.length) {
         area.appendChild(h("div", { class: "vuoto", text: tutti.length ? "Nessun prompt corrisponde alla ricerca." : "Non ci sono ancora prompt in questa pagina: aggiungi il primo con «Nuovo prompt»." }));
@@ -935,7 +934,6 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
     var altri = Array.isArray(x.altri_prompt) ? x.altri_prompt.filter(function (a) { return a && typeof a.testo === "string"; }) : [];
     var corpo = h("div", { class: "card-b" },
       st === "collega" ? h("div", { class: "avviso", text: "Prompt aggiunto da un collega: non è ancora stato verificato. Leggilo tutto prima di usarlo." }) : null,
-      x.descrizione ? h("p", { text: x.descrizione }) : null,
       h("dl", { class: "dati" },
         x.strumento ? [h("dt", { text: "Strumento" }), h("dd", { text: x.strumento })] : null,
         h("dt", { text: "Documenti da allegare" }), h("dd", { text: x.documenti || "—" })),
@@ -987,7 +985,7 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
       if (x.strumento && !Array.prototype.some.call(str.options, function (o) { return o.value === x.strumento; })) str.appendChild(h("option", { value: x.strumento, text: x.strumento }));
       if (x.strumento) str.value = x.strumento;
       $("n-tit").value = x.titolo || ""; $("n-pro").value = x.prompt || ""; $("n-doc").value = x.documenti || "";
-      $("n-des").value = x.descrizione || ""; $("n-uso").value = lista(x.come_si_usa).join("\n");
+      $("n-uso").value = lista(x.come_si_usa).join("\n");
       $("n-ctr").value = x.prompt_controllo || ""; $("n-not").value = x.note || ""; $("n-aut").value = x.autore || "";
       $("n-sta").value = x.stato || "collega";
       if (x.come_si_usa && lista(x.come_si_usa).length || x.prompt_controllo || x.note) $("n-altri").open = true;
@@ -1036,7 +1034,7 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
     e.preventDefault(); mostraErr("nuovo-err", ""); pulisciErrori();
     var cat = $("n-cat").value === "__nuova" ? $("n-catn").value.trim() : $("n-cat").value;
     var riga = {
-      reparto: $("n-rep").value, categoria: cat, titolo: $("n-tit").value.trim(), descrizione: $("n-des").value.trim(),
+      reparto: $("n-rep").value, categoria: cat, titolo: $("n-tit").value.trim(),
       strumento: $("n-str").value, documenti: $("n-doc").value.trim(),
       come_si_usa: $("n-uso").value.split("\n").map(function (s) { return s.replace(/^\s*(\d+[.)]|-)\s*/, "").trim(); }).filter(Boolean).slice(0, 15),
       prompt: $("n-pro").value.trim(), prompt_controllo: $("n-ctr").value.trim(), autore: $("n-aut").value.trim()
@@ -1049,7 +1047,7 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
     if (cat.length < 2) errori.push([$("n-cat").value === "__nuova" ? "n-catn" : "n-cat", "Scrivi il nome della nuova categoria (almeno 2 caratteri)."]);
     if (riga.titolo.length < 3) errori.push(["n-tit", riga.titolo ? "Il titolo è troppo corto: almeno 3 caratteri." : "Scrivi il titolo del prompt."]);
     if (riga.prompt.length < 10) errori.push(["n-pro", riga.prompt ? "Il prompt è troppo corto: incollalo tutto." : "Incolla qui il testo del prompt."]);
-    ["n-tit", "n-des", "n-doc", "n-pro", "n-ctr", "n-not"].forEach(function (id) {
+    ["n-tit", "n-doc", "n-pro", "n-ctr", "n-not"].forEach(function (id) {
       if (errori.some(function (x) { return x[0] === id; })) return;
       for (var i = 0; i < RX_SENSIBILI.length; i++) {
         if (RX_SENSIBILI[i][0].test($(id).value)) { errori.push([id, "Qui sembra esserci " + RX_SENSIBILI[i][1] + ". Al suo posto usa una [parentesi quadra]."]); return; }
