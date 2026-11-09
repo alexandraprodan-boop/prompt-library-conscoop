@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NcGeJvxS8qGXuiibzQaKHM0451DSvHCXqddw/cqf1OQ='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-0RvGEYJ4DU4BUVNyPwfMfO8nnYJa2UJnByJZDbhGpGo='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -853,10 +853,14 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
   window.addEventListener("hashchange", vai);
 
   // ---------- pagina di reparto ----------
-  // Elimina compare accanto a Modifica: stessa regola (proprio reparto e prompt generali, l'amministratore tutti)
-  function puoEliminare(x) { return !x.base && puoModificare(x); }
+  // Elimina (anche i prompt di base): l'amministratore tutti, un reparto solo i prompt del proprio reparto.
+  // I prompt generali si possono aggiungere e modificare da tutti, ma eliminare solo dall'amministratore.
+  function puoEliminare(x) {
+    var p = stato.sessione.profilo;
+    return p.admin || (!!p.reparto && x.reparto === p.reparto);
+  }
   // si possono modificare tutti i prompt delle pagine in cui si può anche aggiungere: il proprio reparto e i prompt generali
-  // (l'amministratore tutti). L'ultima parola spetta comunque al database (supabase/modifica_prompt.sql).
+  // (l'amministratore tutti). L'ultima parola spetta comunque alle regole del database.
   function puoModificare(x) {
     var p = stato.sessione.profilo;
     return p.admin || x.reparto === "Generali" || (p.reparto && x.reparto === p.reparto);
