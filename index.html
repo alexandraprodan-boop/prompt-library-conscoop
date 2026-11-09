@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-0p5sb/PUjr+mTOmV1noeKbV8m1nYuahsIvDybxaG5YU='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vCjPClnmD8rOY2rgQX4Yy5Y9Q5v54gVHcKq+bA+XBYY='; style-src 'sha256-t4RoDPGRR/JgSK2AxhLwKQ5I47tlDRrr7PQcj9hQ2kM=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'self' https://pbtenvftknntktjbcluc.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <!-- Configurazione: indirizzo del progetto Supabase e chiave pubblica (anon). Vedi README_pubblicazione.md -->
@@ -931,21 +931,19 @@ dialog.piccola .dlg-f{border-top:none;padding-top:4px;padding-bottom:20px}
 
   function scheda(x) {
     var st = x.stato || "collega";
-    var uso = lista(x.come_si_usa), serve = lista(x.cosa_serve);
+    var uso = lista(x.come_si_usa);
     var altri = Array.isArray(x.altri_prompt) ? x.altri_prompt.filter(function (a) { return a && typeof a.testo === "string"; }) : [];
     var corpo = h("div", { class: "card-b" },
       st === "collega" ? h("div", { class: "avviso", text: "Prompt aggiunto da un collega: non è ancora stato verificato. Leggilo tutto prima di usarlo." }) : null,
       x.descrizione ? h("p", { text: x.descrizione }) : null,
       h("dl", { class: "dati" },
         x.strumento ? [h("dt", { text: "Strumento" }), h("dd", { text: x.strumento })] : null,
-        h("dt", { text: "Documenti da allegare" }), h("dd", { text: x.documenti || "—" }),
-        x.processo ? [h("dt", { text: "Processo" }), h("dd", { text: x.processo })] : null),
+        h("dt", { text: "Documenti da allegare" }), h("dd", { text: x.documenti || "—" })),
       uso.length ? h("div", null, h("h4", { text: "Come si usa" }), h("ol", null, uso.map(function (u) { return h("li", { text: u }); }))) : null,
       bloccoPrompt("Prompt", x.prompt || "", true),
       x.prompt_controllo ? bloccoPrompt("Prompt di controllo · nella stessa chat", x.prompt_controllo, false) : null,
       altri.map(function (a) { return bloccoPrompt(a.etichetta || "Domanda successiva", a.testo, false); }),
       x.note ? h("div", { class: "avviso blu", text: x.note }) : null,
-      st === "bozza" && serve.length ? h("div", null, h("h4", { text: "Cosa serve per provarlo" }), h("ul", null, serve.map(function (u) { return h("li", { text: u }); }))) : null,
       !x.base || puoModificare(x) ? h("div", { class: "piede-card" },
         h("span", { text: x.base ? "" : "Aggiunto" + (x.autore ? " da " + x.autore : "") + (x.creato_da ? " · " + x.creato_da : "") + (x.created_at ? " · " + new Date(x.created_at).toLocaleDateString("it-IT") : "") }),
         h("span", { class: "piede-azioni" },
